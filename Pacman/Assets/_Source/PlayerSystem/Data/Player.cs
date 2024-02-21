@@ -1,17 +1,22 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 namespace PlayerSystem.Data
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IPacUnit
     {
         [field: SerializeField] public int PlayerLives { get; private set; }
-        [field: SerializeField] public float PlayerSpeed { get; private set; }
-        [field: SerializeField] public float PlayerSpeedMultiplier { get; private set; }
-        [field: SerializeField] public Rigidbody2D PlayerRb { get; private set; }
+        [field: SerializeField] public float Speed { get; private set; }
+        //[field: SerializeField] public float PlayerSpeed { get; private set; }
+        [field: SerializeField] public float PlayerRotationSpeed { get; private set; }
+        [field: SerializeField] public float SpeedMultiplier { get; private set; }
+        [field: SerializeField] public Rigidbody2D Rb { get; private set; }
+        [field: SerializeField] public Transform Transform { get; private set; }
         [field: SerializeField] public LayerMask ObstacleLayer { get; private set; }
         [field: SerializeField] public Vector2 CurrDir { get; private set; }
+        [field: SerializeField] public Vector2 InitialDir { get; private set; }
         [field: SerializeField] public Vector2 NextDir { get; private set; }
         [field: SerializeField] public Vector3 StartPos { get; private set; }
         [field: SerializeField] public KeyCode KeyCodeLeft { get; private set; }
@@ -21,13 +26,26 @@ namespace PlayerSystem.Data
 
         private void Awake()
         {
-            PlayerRb = GetComponent<Rigidbody2D>();
+            Rb = GetComponent<Rigidbody2D>();
             StartPos = transform.position;
+            CurrDir = InitialDir;
         }
 
-        public void ChangeDir(Vector3 dir)
+        public void ChangeDir(Vector2 dir)
         {
-           transform.rotation = Quaternion.Euler(dir);
+            CurrDir = dir;
         }
+
+        public void ChangeNextDir(Vector2 dir)
+        {
+            NextDir = dir;
+        }
+
+        public void Rotate()
+        {
+            
+        }
+
+        
     }
 }

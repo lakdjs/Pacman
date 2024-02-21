@@ -1,5 +1,6 @@
 using System;
 using InputSystem;
+using PelletSystem;
 using PlayerSystem.Data;
 using PlayerSystem.Movement;
 using UnityEngine;
@@ -9,12 +10,18 @@ namespace Core
 {
     public class Bootstrapper : MonoBehaviour
     {
+        [SerializeField] private ScoreView scoreView;
         [SerializeField] private InputListener inputListener;
         [SerializeField] private Player player;
-        private IMovable _iMovable;
+        [SerializeField] private PelletList pelletList;
+        private PlayerMovement _iMovable;
+        private Score _score;
         private void Awake()
         {
-            _iMovable = new PlayerMovement(player.PlayerSpeed,player.PlayerRb, player.transform);
+            _score = new Score();
+            scoreView.Construct(_score);
+            pelletList.Construct(_score);
+            _iMovable = new PlayerMovement(player);
             inputListener.Constructor(_iMovable,player);
         }
     }

@@ -1,32 +1,53 @@
+using PlayerSystem.Data;
 using UnityEngine;
 
 namespace PlayerSystem.Movement
 {
     public class PlayerMovement: IMovable
     {
-        private float _speed;
-        private Rigidbody2D _rb;
-        private Transform _transform;
+        private IPacUnit _unit;
         
-        public PlayerMovement(float speed, Rigidbody2D rigidbody, Transform transform)
+        public PlayerMovement(IPacUnit unit)
         {
-            _speed = speed;
-            _rb = rigidbody;
-            _transform = transform;
+            _unit = unit;
         }
 
         private void Movement()
         {
-            _rb.MovePosition(_transform.position + _transform.right * _speed );
+            Vector2 pos = _unit.Rb.position;
+            Vector2 translation = _unit.CurrDir *
+                                  _unit.Speed *
+                                  _unit.SpeedMultiplier *
+                                  Time.fixedDeltaTime;
+            _unit.Rb.MovePosition(pos + translation);
         }
 
-        public void SetDir()
+        public void SetDir(Vector2 dir)
         {
-            
+            if (!DoesHitWall(dir))
+            {
+                _unit.ChangeDir(dir);
+                _unit.ChangeNextDir(Vector2.zero);
+            }
+            else
+            {
+                _unit.ChangeNextDir(dir);
+            }
         }
+        
         public void Move()
         {
             Movement();
+        }
+
+        private bool DoesHitWall(Vector2 dir)
+        {
+            RaycastHit2D hit = Physics2D.BoxCast(_unit.Transform.position,
+                Vector2.one * 0.75f, 0.0f,
+                dir,
+                1.5f,
+                _unit.ObstacleLayer);
+            return hit.collider != null;
         }
     }
 }

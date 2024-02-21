@@ -1,3 +1,4 @@
+using System;
 using PlayerSystem.Data;
 using PlayerSystem.Movement;
 using UnityEngine;
@@ -7,40 +8,54 @@ namespace InputSystem
     public class InputListener : MonoBehaviour
     {
         private Player _player;
-        private IMovable _movement;
+        private PlayerMovement _movement;
         private Vector3 _direction;
         private const string Horizontal = "Horizontal";
         private const string Vertical = "Vertical";
 
-        public void Constructor(IMovable movement, Player player)
+        public void Constructor(PlayerMovement movement, Player player)
         {
             _movement = movement;
             _player = player;
         }
 
+        private void Update()
+        {
+            if (_player.NextDir != Vector2.zero)
+            {
+                _movement.SetDir(_player.NextDir);
+            }
+            ReadDirection();
+        }
+
         private void FixedUpdate()
         {
-            ReadDirection();
+            
             _movement.Move();
         }
         private void ReadDirection()
         {
-            if (Input.GetKey(_player.KeyCodeBack))
+            if (Input.GetKeyDown(_player.KeyCodeBack))
             {
-                _player.ChangeDir(new Vector3(0,0,-90));
+                _movement.SetDir(Vector2.down);
+                _player.Rotate();
             }
-            if (Input.GetKey(_player.KeyCodeStraight))
+            else if (Input.GetKeyDown(_player.KeyCodeStraight))
             {
-                _player.ChangeDir(new Vector3(0,0,90));
+                _movement.SetDir(Vector2.up);
+                _player.Rotate();
             }
-            if (Input.GetKey(_player.KeyCodeLeft))
+            else if (Input.GetKeyDown(_player.KeyCodeLeft))
             {
-                _player.ChangeDir(new Vector3(0,0,-180));
+                _movement.SetDir(Vector2.left);
+                _player.Rotate();
             }
-            if (Input.GetKey(_player.KeyCodeRight))
+            else if (Input.GetKeyDown(_player.KeyCodeRight))
             {
-                _player.ChangeDir(new Vector3(0,0,-0));
+                _movement.SetDir(Vector2.right);
+                _player.Rotate();
             }
+            
         }
     }
 }
