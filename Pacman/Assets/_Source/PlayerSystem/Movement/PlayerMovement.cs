@@ -20,6 +20,10 @@ namespace PlayerSystem.Movement
             _rb.MovePosition(_transform.position + _transform.right * _speed );
         }
 
+        public void SetDir()
+        {
+            
+        }
         public void Move()
         {
             Movement();
