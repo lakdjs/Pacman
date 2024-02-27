@@ -7,9 +7,10 @@ namespace PelletSystem
     {
         public const int StartValue = 0;
         private const int EndValue = 0;
-        
+        private  int _maxScoreValue;
         public int ScoreValue { get; private set; }
 
+        public event Action OnMaxScore; 
         public event Action<int> OnScoreChange;
         public void ResetScore()
         {
@@ -25,9 +26,14 @@ namespace PelletSystem
 
         public void AddScore(int adding)
         {
+            
             Debug.Log(ScoreValue);
             ScoreValue += adding;
             OnScoreChange?.Invoke(ScoreValue);
+            if (ScoreValue >= _maxScoreValue)
+            {
+                OnMaxScore?.Invoke();
+            }
         }
     }
 }

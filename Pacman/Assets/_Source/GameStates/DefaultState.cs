@@ -5,15 +5,21 @@ namespace GameStates
 {
     public class DefaultState : AState
     {
+        
         public override void Enter()
         {
             
-            throw new System.NotImplementedException();
+            //что то
         }
 
         public override void Exit()
         {
-            throw new System.NotImplementedException();
+           //и здесь что то
+        }
+
+        private void Win()
+        {
+            
         }
 
         public DefaultState(IStateMachine owner) : base(owner)

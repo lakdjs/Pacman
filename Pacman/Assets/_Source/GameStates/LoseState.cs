@@ -6,16 +6,17 @@ namespace GameStates
     {
         public override void Enter()
         {
-            throw new System.NotImplementedException();
+            //TODO ну там отключить все!
         }
 
         public override void Exit()
         {
-            throw new System.NotImplementedException();
+            //TODO включить
         }
 
         public LoseState(IStateMachine owner) : base(owner)
         {
+            
         }
     }
 }
