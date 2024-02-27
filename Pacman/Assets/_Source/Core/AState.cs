@@ -4,7 +4,11 @@
     {
         protected IStateMachine Owner;
 
-        public void SetOwner(IStateMachine owner) => Owner = owner;
+        protected AState(IStateMachine owner)
+        {
+            Owner = owner;
+        }
+        public void AssignOwner(IStateMachine owner) => Owner = owner;
         
         public abstract void Enter();
         public abstract void Exit();

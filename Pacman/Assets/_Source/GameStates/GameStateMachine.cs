@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using Core;
 
-namespace StateSystem
+namespace GameStates
 {
-    public class StateMachine: IStateMachine
+    public class GameStateMachine: IStateMachine
     {
         private Dictionary<Type, AState> _states;
         private AState _currAState;
         
-        public StateMachine(params AState[] states)
+        public GameStateMachine(params AState[] states)
         {
             SetupStates(states);
         }
         
-        public bool ChangeState<T>()
+        public bool ChangeStateByType<T>()
         {
             _currAState?.Exit();
             if (_states.ContainsKey(typeof(T)))
@@ -33,6 +33,7 @@ namespace StateSystem
             foreach (var state in states)
             {
                 _states.Add(state.GetType(),state);
+                state.AssignOwner(this);
             }
         }
     }

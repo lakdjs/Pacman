@@ -6,6 +6,7 @@ namespace PlayerSystem.Data
     {
         public float Speed { get; }
         public Vector2 CurrDir { get; }
+        public Vector2 InitialDir { get; }
         public Vector2 NextDir { get; }
         public float SpeedMultiplier { get; }
         public Rigidbody2D Rb { get; }

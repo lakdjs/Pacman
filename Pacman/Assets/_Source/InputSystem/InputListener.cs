@@ -30,7 +30,6 @@ namespace InputSystem
 
         private void FixedUpdate()
         {
-            
             _movement.Move();
         }
         private void ReadDirection()
