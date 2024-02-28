@@ -23,6 +23,9 @@ namespace PlayerSystem.Data
         [field: SerializeField] public KeyCode KeyCodeRight { get; private set; }
         [field: SerializeField] public KeyCode KeyCodeStraight { get; private set; }
         [field: SerializeField] public KeyCode KeyCodeBack { get; private set; }
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private new Collider2D collider;
+        [SerializeField] private AnimatedSprite deathSequence;
 
         private void Awake()
         {
@@ -45,7 +48,20 @@ namespace PlayerSystem.Data
         {
             
         }
-
+        public void ResetState()
+        {
+            enabled = true;
+            spriteRenderer.enabled = true;
+            collider.enabled = true;
+            deathSequence.enabled = false;
+            SpeedMultiplier = 1f;
+            CurrDir = InitialDir;
+            NextDir = Vector2.zero;
+            transform.position = StartPos;
+            Rb.isKinematic = false;
+            enabled = true;
+            gameObject.SetActive(true);
+        }
         
     }
 }

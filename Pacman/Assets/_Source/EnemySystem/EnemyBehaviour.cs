@@ -6,7 +6,7 @@ namespace EnemySystem
     {
     
         public AEnemy Enemy { get; private set; }
-        public float duration { get; private set; }
+        [field:SerializeField] protected float duration { get; private set; }
 
         private void Awake()
         {
@@ -19,7 +19,7 @@ namespace EnemySystem
         }
 
         public virtual void Enable(float duration)
-        {
+        { 
             enabled = true;
 
             CancelInvoke();

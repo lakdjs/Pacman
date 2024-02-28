@@ -1,4 +1,5 @@
 ﻿using Core;
+using UnityEngine;
 
 namespace GameStates
 {
@@ -6,7 +7,7 @@ namespace GameStates
     {
         public override void Enter()
         {
-            
+            Debug.Log("Win");
         }
 
         public override void Exit()
@@ -14,8 +15,9 @@ namespace GameStates
             
         }
 
-        public WinState(IStateMachine owner) : base(owner)
+        public WinState() 
         {
+            
         }
     }
 }

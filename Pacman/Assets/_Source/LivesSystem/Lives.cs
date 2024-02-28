@@ -9,7 +9,7 @@ namespace LivesSystem
         public int CurrLivesQuantity { get; private set; }
 
         public event Action OnPacManDied;
-        public event Action<int> OnLifeDeleted;
+        public event Action OnLifeDeleted;
 
         public Lives(int maxQuantity)
         {
@@ -27,7 +27,7 @@ namespace LivesSystem
             if (CurrLivesQuantity > 1)
             {
                 CurrLivesQuantity--;
-                OnLifeDeleted?.Invoke(-1);
+                OnLifeDeleted?.Invoke();
                 return;
             }
             OnPacManDied?.Invoke();

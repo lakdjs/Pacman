@@ -12,7 +12,7 @@ namespace EnemySystem
         [field: SerializeField] public Vector2 CurrDir { get; private set; }
         [field: SerializeField] public Vector2 InitialDir { get; private set; }
         [field: SerializeField] public Vector2 NextDir { get; private set; }
-        [field: SerializeField] public float SpeedMultiplier { get; private set;}
+        [field: SerializeField] public float SpeedMultiplier { get; set;}
         [field: SerializeField] public Rigidbody2D Rb { get; private set; }
         [field: SerializeField] public Transform Transform { get; private set; }
         [field: SerializeField] public Transform Target { get; private set; }
@@ -27,9 +27,25 @@ namespace EnemySystem
 
         public PlayerMovement Movement { get; private set; }
 
+        public EnemyListener EnemyListener { get; private set; }
+
         private void Awake()
         {
+            EnemyListener = FindObjectOfType<EnemyListener>();
             CurrDir = InitialDir;
+            
+        }
+
+        private void Start()
+        {
+            
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            // Keep the z-position the same since it determines draw depth
+            position.z = transform.position.z;
+            transform.position = position;
         }
 
         public void Construct(PlayerMovement playerMovement)
@@ -44,6 +60,22 @@ namespace EnemySystem
         public void ChangeNextDir(Vector2 dir)
         {
             NextDir = dir;
+        }
+        public void ResetState()
+        {
+            gameObject.SetActive(true);
+            
+            Frightened.Disable();
+            Chase.Disable();
+            Scatter.Enable();
+
+            if (Home != initialBehavior) {
+                Home.Disable();
+            }
+
+            if (initialBehavior != null) {
+                initialBehavior.Enable();
+            }
         }
     }
 }

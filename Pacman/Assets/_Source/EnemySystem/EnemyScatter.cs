@@ -12,7 +12,7 @@ namespace EnemySystem
         private void OnTriggerEnter2D(Collider2D other)
         {
             Node node = other.GetComponent<Node>();
-            if (node != null && enabled /*&& !Enemy.Frightened.enabled*/)
+            if (node != null && enabled && !Enemy.Frightened.enabled)
             {
                 int index = Random.Range(0, node.AvailableDirections.Count);
                 foreach (Vector2 dir in node.AvailableDirections)
